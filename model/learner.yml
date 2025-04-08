@@ -1,10 +1,10 @@
 learner:
-  description: "Schema for a single learner’s profile and performance data"
+  description: "Sistema de tutoria para um aluno da disciplina Matemática elementar"
   type: dict
   properties:
     id:
       type: string
-      description: "Unique identifier for the learner (e.g., UUID or incremental ID)"
+      description: "Nome e matrícula"
       example: "learner_001"
     answers:
       type: dict
