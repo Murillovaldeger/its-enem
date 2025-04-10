@@ -1,137 +1,116 @@
-feedback_types:
-  - name: "autonomy"
-    description: "Encourages learners to take control of their learning by exploring topics independently or setting their own goals."
-    message: "🟡 Que tal explorar {item} mais por conta própria para aprofundar seu entendimento? 🤔"
-  - name: "competence"
-    description: "Affirms the learner's ability to master the material, highlighting progress and strengths."
-    message: "🟢 Você demonstrou ótima competência em {item}! Continue com esse ótimo trabalho. ⭐"
-  - name: "relatedness"
-    description: "Makes the learner feel connected and supported, normalizing struggles and suggesting collaboration."
-    message: "🟡 Muitos estudantes acham {item} desafiador. Você não está sozinho e ano que vem você vai ser melhor. 🤗"
-  - name: "urgent"
-    description: "Indicates a need for immediate attention to foundational concepts due to struggles with easy questions."
-    message: "🔴 Urgente: Você teve dificuldade com questões fáceis em {item}. Vamos revisar os conceitos básicos para construir uma base mais sólida. ❗"
-  - name: "review"
-    description: "Suggests revisiting the topic to strengthen understanding, especially for more challenging concepts."
-    message: "🟡 Considere revisar {item} 🔄, especialmente os conceitos mais difíceis, para melhorar seu domínio. 📚"
+tipos_de_feedback:
 
-feedback_rules:
-  # Topic-level rules
-  - name: "Relatedness for low easy question performance in topic"
-    condition:
-      type: "and"
-      conditions:
-        - type: "greater_than_or_equal"
-          left: "performance.topics[topic].total_questions"
-          right: 2 
-        - type: "less_than"
-          left: "performance.topics[topic].percent_correct_easy_questions"
-          right: 60.0
-    action:
-      feedback_relatedness[topic]: 1
-    description: "Flags relatedness feedback if performance on easy questions in the topic is below 60%"
+  - nome: "autonomia"
+    descricao: "Incentiva os alunos a assumirem o controle da própria aprendizagem, explorando os temas de forma independente ou definindo seus próprios objetivos."
+    mensagem: "Notei que você acertou várias questões em {item}, mas ainda há tópicos que merecem mais atenção. Vamos juntos revisar os conteúdos onde surgiram dúvidas? Com foco e prática, seu desempenho pode melhorar bastante!"
 
-  - name: "Competence for high hard question performance in topic"
-    condition:
-      type: "and"
-      conditions:
-        - type: "greater_than_or_equal"
-          left: "performance.topics[topic].total_questions"
-          right: 2 
-        - type: "greater_than"
-          left: "performance.topics[topic].percent_correct_high_questions"
-          right: 70.0
-    action:
-      feedback_competence[topic]: 1
-    description: "Flags competence feedback if performance on hard questions in the topic exceeds 70%"
+  - nome: "competencia"
+    descricao: "Afirma a capacidade do aluno de dominar o conteúdo, destacando o progresso e os pontos fortes."
+    mensagem: "Você está demonstrando grande competência em {item}! Continue com o ótimo trabalho."
 
-  - name: "Autonomy for moderate medium question performance in topic"
-    condition:
-      type: "and"
-      conditions:
-        - type: "greater_than_or_equal"
-          left: "performance.topics[topic].total_questions"
-          right: 2
-        - type: "greater_than_or_equal"
-          left: "performance.topics[topic].percent_correct_medium_questions"
-          right: 50.0
-        - type: "less_than_or_equal"
-          left: "performance.topics[topic].percent_correct_medium_questions"
-          right: 80.0
-    action:
-      feedback_autonomy[topic]: 1
-    description: "Flags autonomy feedback if performance on medium questions in the topic is between 50% and 80%"
+  - nome: "relacionamento"
+    descricao: "Faz o aluno se sentir acolhido e apoiado, normalizando dificuldades e sugerindo colaboração."
+    mensagem: "Muitos estudantes acham {item} desafiador. Você não está sozinho — vamos enfrentar isso juntos."
 
-  - name: "Urgent focus due to very low easy question performance in topic"
-    condition:
-      type: "and"
-      conditions:
-      - type: "greater_than_or_equal"
-        left: "performance.topics[topic].total_questions"
-        right: 2
-      - type: "less_than"
-        left: "performance.topics[topic].percent_correct_easy_questions"
-        right: 50.0
-    action:
-      feedback_urgent[topic]: 1
-    description: "Flags urgent focus if performance on easy questions in the topic is below 50%"
+  - nome: "urgente"
+    descricao: "Indica a necessidade de atenção imediata a conceitos fundamentais devido a dificuldades em questões fáceis."
+    mensagem: "Atenção: Você teve dificuldade em questões fáceis sobre {item}. Vamos revisar os conceitos básicos para construir uma base mais sólida."
 
-  - name: "Review due to low hard question performance in topic"
-    condition:
-      type: "and"
-      conditions:
-      - type: "greater_than_or_equal"
-        left: "performance.topics[topic].total_questions"
-        right: 2
-      - type: "less_than"
-        left: "performance.topics[topic].percent_correct_high_questions"
-        right: 50.0
-    action:
-      feedback_review[topic]: 1
-    description: "Flags review if performance on hard questions in the topic is below 70%"
+  - nome: "revisao"
+    descricao: "Sugere revisar o conteúdo para fortalecer o entendimento, especialmente de conceitos mais desafiadores."
+    mensagem: "Considere revisar {item}, especialmente os conceitos mais difíceis, para melhorar seu domínio do conteúdo."
 
-  # Area-level rules
-  - name: "Relatedness for low easy question performance in area"
-    condition:
-      type: "and"
-      conditions:
-      - type: "greater_than_or_equal"
-        left: "performance.areas[area].total_questions"
-        right: 2
-      - type: "less_than"
-        left: "performance.areas[area].percent_correct_easy_questions"
-        right: 60.0
-    action:
-      feedback_relatedness[area]: 1
-    description: "Flags relatedness feedback if performance on easy questions in the area is below 60%"
 
-  - name: "Competence for high hard question performance in area"
-    condition:
-      type: "and"
-      conditions:
-      - type: "greater_than_or_equal"
-        left: "performance.areas[area].total_questions"
-        right: 2
-      - type: "greater_than"
-        left: "performance.areas[area].percent_correct_high_questions"
-        right: 70.0
-    action:
-      feedback_competence[area]: 1
-    description: "Flags competence feedback if performance on hard questions in the area exceeds 70%"
+regras_de_feedback:
 
-  - name: "Autonomy for moderate medium question performance in area"
-    condition:
-      type: "and"
-      conditions:
-        - type: "greater_than_or_equal"
-          left: "performance.areas[area].total_questions"
-          right: 2
-        - type: "greater_than_or_equal"
-          left: "performance.areas[area].percent_correct_medium_questions"
-          right: 50.0
-        - type: "less_than_or_equal"
-          left: "performance.areas[area].percent_correct_medium_questions"
-          right: 80.0
-    action:
-      feedback_autonomy[area]: 1
-    description: "Flags autonomy feedback if performance on medium questions in the area is between 50% and 80%"
+  - nome: "Relacionamento para baixo desempenho em tópico"
+    condicao:
+      tipo: "menor_que"
+      esquerda: "performance.topics[topic].percent_correct"
+      direita: 50.0
+    acao:
+      feedback_relacionamento[topic]: 1
+    descricao: "Ativa o feedback de relacionamento se o desempenho no tópico for inferior a 50%"
+
+  - nome: "Competência para alto desempenho em tópico"
+    condicao:
+      tipo: "maior_que"
+      esquerda: "performance.topics[topic].percent_correct"
+      direita: 80.0
+    acao:
+      feedback_competencia[topic]: 1
+    descricao: "Ativa o feedback de competência se o desempenho no tópico ultrapassar 80%"
+
+  - nome: "Autonomia para desempenho moderado em tópico"
+    condicao:
+      tipo: "e"
+      condicoes:
+        - tipo: "maior_ou_igual"
+          esquerda: "performance.topics[topic].percent_correct"
+          direita: 50.0
+        - tipo: "menor_ou_igual"
+          esquerda: "performance.topics[topic].percent_correct"
+          direita: 80.0
+    acao:
+      feedback_autonomia[topic]: 1
+    descricao: "Ativa o feedback de autonomia se o desempenho no tópico estiver entre 50% e 80%"
+
+  - nome: "Relacionamento para baixo desempenho em área"
+    condicao:
+      tipo: "menor_que"
+      esquerda: "performance.areas[area].percent_correct"
+      direita: 50.0
+    acao:
+      feedback_relacionamento[area]: 1
+    descricao: "Ativa o feedback de relacionamento se o desempenho na área for inferior a 50%"
+
+  - nome: "Competência para alto desempenho em área"
+    condicao:
+      tipo: "maior_que"
+      esquerda: "performance.areas[area].percent_correct"
+      direita: 80.0
+    acao:
+      feedback_competencia[area]: 1
+    descricao: "Ativa o feedback de competência se o desempenho na área ultrapassar 80%"
+
+  - nome: "Autonomia para desempenho moderado em área"
+    condicao:
+      tipo: "e"
+      condicoes:
+        - tipo: "maior_ou_igual"
+          esquerda: "performance.areas[area].percent_correct"
+          direita: 50.0
+        - tipo: "menor_ou_igual"
+          esquerda: "performance.areas[area].percent_correct"
+          direita: 80.0
+    acao:
+      feedback_autonomia[area]: 1
+    descricao: "Ativa o feedback de autonomia se o desempenho na área estiver entre 50% e 80%"
+
+  - nome: "Foco urgente devido a erros em questões fáceis"
+    condicao:
+      tipo: "e"
+      condicoes:
+        - tipo: "maior_que"
+          esquerda: "performance.topics[topic].difficulty_breakdown.easy"
+          direita: 0
+        - tipo: "menor_que"
+          esquerda: "performance.topics[topic].percent_correct"
+          direita: 50.0
+    acao:
+      feedback_urgente[topic]: 1
+    descricao: "Ativa o feedback urgente se houver questões fáceis e o desempenho no tópico for inferior a 50%"
+
+  - nome: "Revisão necessária por fraqueza em questões difíceis"
+    condicao:
+      tipo: "e"
+      condicoes:
+        - tipo: "maior_que"
+          esquerda: "performance.topics[topic].difficulty_breakdown.hard"
+          direita: 0
+        - tipo: "menor_que"
+          esquerda: "performance.topics[topic].percent_correct"
+          direita: 70.0
+    acao:
+      feedback_revisao[topic]: 1
+    descricao: "Ativa o feedback de revisão se houver questões difíceis e o desempenho no tópico for inferior a 70%"
