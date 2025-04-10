@@ -5,7 +5,7 @@ learner:
     id:
       type: string
       description: "Nome e matrícula"
-      example: "learner_001"
+      example: "Aluno"
     answers:
       type: dict
       description: "Learner's answers to questions (key: question ID, value: A/B/C/D/E)"
