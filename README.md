@@ -1,34 +1,49 @@
-# ITS-ENEM: Template para Implementação de um Intelligent Tutor System para o ENEM
+# ITS-ENEM
 
-**Bem-vindo(a)!** Este repositório é um trabalho em andamento (work in progress) utilizado para propósitos ilustrativos de como um ITS pode ser implementado para o ENEM, de maneira similar ao app [Planejativo](https://app.planejativo.com/materias). 
+**Bem-vindo(a)!** Este repositório é um trabalho em andamento utilizado para propósitos ilustrativos de como um Sistemas de Tutoria Inteligente (ITS) pode ser implementado na prática. 
 
-O repositório tem objetivo de servir como template base para implementação do seu ITS. 
+Mas por que ITS são relevantes?
 
-## O que fazer neste repositório?
+> O "Problema 2 Sigma", identificado por Benjamin Bloom (1984), demonstra que o tutoria individualizada pode elevar o desempenho estudantil em *até* dois desvios padrão sobre o ensino tradicional. Contudo, a tutoria individual é de difícil escalabilidade por restrições logísticas e econômicas. Sistemas Tutores Inteligentes (ITS) emergem como alternativa, usando IA para oferecer instrução personalizada e adaptativa, visando replicar a eficácia do tutor humano e democratizar o acesso à educação de qualidade em larga escala.
 
-Um ITS é formado por três componentes principais:
+![ITS](images/ITS.drawio.png)
 
-- Um modelo de domínio que define a estrutura de tópicos e áreas do seu conteúdo.
-- Um modelo pedagógico que define as regras de feedback do ITS.
-- Um modelo de aluno que define em variáveis sobre o processo de aprendizagem do aluno diante das questões do ENEM.
+*Figura: Representação de conhecimento em AIED: abordagens simbólicas e conexionistas, e arquitetura de Sistemas de Tutoria Inteligente (ITS).*
 
-Para projetar o seu próprio ITS, você deve então começar por:
+Este repositório tem objetivo de servir como template base para implementação do seu ITS. 
 
-1. Implementar o seu próprio modelo de domínio (model/domain.yml)
-2. Implementar o seu próprio modelo pedagógico (model/pedagogy.yml)
-3. Implementar o seu próprio modelo de aluno (model/learner.py)
+## 🛠️ Como criar meu próprio ITS?
 
-> Dica: Na pasta `model` você encontrará arquivos `domain.yml`, `pedagogy.yml` e `learner.py` que servirão de base para o seu ITS.
+### Etapa # 1 - Projete seus modelos.
 
-Após a fase de design, você deve então implementar o controlador e uma interface de usuário.
+- **Modelo de domínio**: define a estrutura de tópicos e áreas do seu conteúdo.
+- **Modelo pedagógico**: define as regras de feedback do ITS.
+- **Modelo de aluno**: define em variáveis sobre o processo de aprendizagem do aluno diante das questões do ENEM.
 
-1. Implementar o seu próprio controlador (controller.py)
-2. Implementar o seu próprio UI e/ou open learner model
+> Dica: Explore a pasta `model` e os arquivos `domain.yml`, `pedagogy.yml` e `learner.yml`. Para implementar seu próprio ITS, um caminho recomendado seria:
+> 1. Implementar o seu próprio modelo de domínio (model/domain.yml) para representar o conhecimento da tarefa
+> 2. Implementar o seu próprio modelo pedagógico (model/pedagogy.yml) para indicar tipos de feedback (saídas esperadas, "o que falar") e regras ("quando falar")
+> 3. Implementar o seu próprio modelo de aluno (model/learner.py) com base nas variáveis utilizadas nas regras do modelo pedagógico
 
 
-## 📚 Mais sobre o exemplo do ITS-ENEM
+### Etapa 2 - Implemente o controlador
 
- Pitch: "ITS-ENEM fornece tutoria de estudos em tópicos e áreas das **Ciências da Natureza do ENEM** com dicas de estudo para fortalecer sua auto-determinação e confiança para o próximo exame! 🚀"
+Após a fase de design, você deve então implementar a lógica do controlador, que irá carregar e manipular dados para gerar o feedback baseado nos modelos projetados. 
+
+(Em construção)...
+
+
+### Etapa 3 - Implemente UI e OLM
+
+(Em construção)...
+
+
+## 📚 Exemplo de inspiração: Mais sobre o ITS-ENEM (disponível em `notebooks`)
+
+> Pitch: "Não conseguiu sua aprovação no SISU? Vai precisar fazer outro ENEM? ITS-ENEM fornece tutoria de estudos em tópicos e áreas das **Ciências da Natureza do ENEM** com dicas de estudo para fortalecer sua auto-determinação e confiança para o próximo exame! 🚀"
+
+O ITS-ENEM foi o caso de uso utilizado para construção desse template de ITS. Utilizei uma porção de dados das questões do ENEM disponiveis no [HuggingFace Datasets](https://huggingface.co/datasets/maritaca-ai/enem). Na versão disponível em `model/enem_2024_09042025.jsonl`, adicionei mais campos a cada questão, como sua área de conhecimento especifica, seus respectivos topicos/subtopicos alvo e o seu nível de dificuldade estimado. Isso poderá nos ajudar a adaptar o feedback à diferentes condições do modelo pedagógico comparando com simplesmente saber a porcentagem geral de questões certas/erradas do aluno.
+
 
 ## ❓ Do Que Se Trata?
 - **📝 Dicas Inteligentes**: Baseado no seu gabarito do ano anterior, diz o que você precisa estudar (ex: "Revise Mitose!").
@@ -38,11 +53,5 @@ Após a fase de design, você deve então implementar o controlador e uma interf
 - **Entradas**: Escolha A, B, C, D ou E.
 - **Saidas**: Receba um relatório pedagogicamente significativo com tópicos e áreas para focar nos seus estudos para futuros exames.
 
-## 🏃 Como Executar o Código?
-1.  **Obtenha o código**: `git clone https://github.com/adaj/its-enem.git`
-2.  **Configure**: `cd its-enem` , então  `pip install -r requirements.txt`
-3.  **Execute!**: Você pode utilizar o ITS abrindo o `its-enem.ipynb` e executando as células do notebook. Tente mudar o seu gabarito para ver como o ITS se comporta com diferentes respostas.
-
-
 ## 💬 Fórum de Discussões
-Entre em contato pelo [GitHub](https://github.com/adaj/its-enem/issues)! 😊
+Abra uma [issue](https://github.com/adaj/its-enem/issues)! 😊
